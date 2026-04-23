@@ -156,7 +156,7 @@ def home():
 def predict():
     user_input = request.form['url']
 
-    temp_url = user_input.strip()
+    temp_url = user_input
     if not temp_url.startswith("http"):
         temp_url = "https://" + temp_url
 
@@ -227,16 +227,11 @@ def predict():
         )
 
     try:
-        print("FINAL URL SENT:", url)
-        print("DOMAIN:", domain)
-        print("IS REACHABLE:", is_url_reachable(url))
         obj = FeatureExtraction(url)
         raw = obj.getFeaturesList()
-        print("RAW FEATURES:", raw) 
 
         feature_dict = dict(zip(original, raw))
         ordered_features = [feature_dict[f] for f in expected]
-        print("ORDERED FEATURES:", ordered_features)
 
         features_array = np.array(ordered_features).reshape(1, -1)
 
